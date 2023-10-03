@@ -5,7 +5,7 @@ import { RedisProvider } from "../../../../../../src/main/database/redis.provide
 import { TypeORMProvider } from "../../../../../../src/main/database/typeorm.provider";
 
 describe("create-user-usecase", () => {
-  jest.mock("../../../../../../src/app/shared/database/repositories");
+  jest.mock("../../../../../../src/app/features/users/repositories/user.repository");
 
   beforeAll(async () => {
     await TypeORMProvider.connect();
