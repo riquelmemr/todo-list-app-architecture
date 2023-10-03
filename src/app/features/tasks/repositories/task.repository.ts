@@ -30,7 +30,7 @@ class TaskRepository extends BaseRepository<TaskEntity, Task> {
     if (title) {
       options.title = ILike(`%${title}%`);
     }
-
+  
     const tasks = await repository.find({
       where: options,
       order: { createdAt: "DESC" },
@@ -54,6 +54,4 @@ class TaskRepository extends BaseRepository<TaskEntity, Task> {
 }
 
 export { TaskRepository };
-
 export const taskRepository = new TaskRepository();
-
