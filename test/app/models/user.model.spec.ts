@@ -1,4 +1,4 @@
-import User from "../../../src/app/models/user.model";
+import User from "@app/models/user.model";
 
 describe("user-model", () => {
   it("should create an instance", () => {

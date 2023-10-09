@@ -41,6 +41,14 @@ const config: Config = {
   transform: {
     ".+\\.ts$": "ts-jest",
   },
+
+  setupFilesAfterEnv: ["<rootDir>/test/setup/setup.ts"],
+
+  moduleNameMapper: {
+    "@app/(.*)": "<rootDir>/src/app/$1",
+    "@main/(.*)": "<rootDir>/src/main/$1",
+    "@test/(.*)": "<rootDir>/test/$1",
+  },
 };
 
 export default config;

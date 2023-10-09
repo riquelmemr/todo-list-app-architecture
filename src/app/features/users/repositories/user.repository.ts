@@ -1,14 +1,44 @@
+import { DeepPartial, Repository } from "typeorm";
+import { TypeORMProvider } from "../../../../main/database";
 import User from "../../../models/user.model";
 import { UserEntity } from "../../../shared/database/entities/user.entity";
-import { BaseRepository } from "../../../shared/database/repositories";
 
-class UserRepository extends BaseRepository<UserEntity, User> {
-  constructor() {
-    super();
-    this.entityClass = UserEntity;
+class UserRepository {
+
+  private getRepository(): Repository<UserEntity> {
+    return TypeORMProvider.client.getRepository(UserEntity);
   }
 
-  mapToModel(item: UserEntity): User {
+  async create(user: UserEntity): Promise<User> {
+    const repository = this.getRepository();
+    const result = await repository.save(user);
+
+    return this.mapToModel(result);
+  }
+
+  async getById(id: string): Promise<User | null> {
+    const repository = this.getRepository();
+    const item = await repository.findOne({
+      where: { ["id"]: id },
+    });
+
+    return item ? this.mapToModel(item) : null;
+  }
+
+  async getByOne(key: string, value: string): Promise<User | null> {
+    const repository = this.getRepository();
+    const item = await repository.findOne({
+      where: { [key]: value },
+    });
+
+    return item ? this.mapToModel(item) : null;
+  }
+
+  public createEntityInstance(item: DeepPartial<UserEntity>): UserEntity {
+    return TypeORMProvider.client.manager.create(UserEntity, item) as UserEntity;
+  }
+
+  private mapToModel(item: UserEntity): User {
     return new User(
       item.id,
       item.name,

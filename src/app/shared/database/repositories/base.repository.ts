@@ -3,7 +3,7 @@ import {
   EntityTarget,
   FindOptionsWhere,
   ObjectLiteral,
-  Repository,
+  Repository
 } from "typeorm";
 import { TypeORMProvider } from "../../../../main/database";
 import { IBaseRepository } from "../interfaces/base-repository.interface";

@@ -12,3 +12,4 @@ class BcryptProvider {
 }
 
 export { BcryptProvider };
+

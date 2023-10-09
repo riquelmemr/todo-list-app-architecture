@@ -1,4 +1,4 @@
-import Task from "../../../src/app/models/task.model";
+import Task from "@app/models/task.model";
 
 describe("task-model", () => {
   it("should create an instance", () => {
