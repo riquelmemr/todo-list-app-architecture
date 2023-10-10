@@ -5,7 +5,6 @@ import { TaskEntity } from "../../../shared/database/entities/task.entity";
 import { IFindAllTasksFilterDTO } from "../useCases/find-all/find-all-tasks.dto";
 
 class TaskRepository {
-
   private getRepository(): Repository<TaskEntity> {
     return TypeORMProvider.client.getRepository(TaskEntity);
   }
@@ -35,7 +34,10 @@ class TaskRepository {
     return item ? this.mapToModel(item) : null;
   }
 
-  async update(id: string, item: DeepPartial<TaskEntity>): Promise<Task | null> {
+  async update(
+    id: string,
+    item: DeepPartial<TaskEntity>
+  ): Promise<Task | null> {
     const repository = this.getRepository();
     const result = await repository.update(id, item);
 
@@ -45,7 +47,7 @@ class TaskRepository {
 
     const updatedItem = await repository.findOne({
       where: { ["id"]: id },
-    })
+    });
 
     return updatedItem ? this.mapToModel(updatedItem) : null;
   }
@@ -81,7 +83,7 @@ class TaskRepository {
     if (title) {
       options.title = ILike(`%${title}%`);
     }
-  
+
     const tasks = await repository.find({
       where: options,
       order: { createdAt: "DESC" },
@@ -91,7 +93,10 @@ class TaskRepository {
   }
 
   public createEntityInstance(item: DeepPartial<TaskEntity>): TaskEntity {
-    return TypeORMProvider.client.manager.create(TaskEntity, item) as TaskEntity;
+    return TypeORMProvider.client.manager.create(
+      TaskEntity,
+      item
+    ) as TaskEntity;
   }
 
   private mapToModel(item: TaskEntity): Task {

@@ -30,6 +30,31 @@ describe('login-user-usecase', () => {
       body: { error: "Utilize um email válido ou cadastre-se." },
       statusCode: 400,
     })
+  });
+
+  it('should return http code 400 when password is invalid', async () => {
+    const { userRepository, loginUserUseCase } = makeSut();
+
+    const userFound = new User(
+      "any_id",
+      "any_name",
+      "any_email",
+      "any_password",
+      new Date()
+    );
+
+    jest.spyOn(userRepository, "getByOne").mockResolvedValue(userFound);
+    jest.spyOn(BcryptProvider, "comparePasswords").mockReturnValue(false);
+
+    const response = await loginUserUseCase.execute({
+      email: 'any_email',
+      password: 'any_invalid_password',
+    });
+
+    expect(response).toStrictEqual({
+      body: { error: "Email e/ou senha inválidos!" },
+      statusCode: 400,
+    })
   })
 
   it('should return http code 200 when user logged', async () => {
