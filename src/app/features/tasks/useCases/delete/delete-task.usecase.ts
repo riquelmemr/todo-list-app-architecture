@@ -1,7 +1,7 @@
-import { TaskRepository } from "@app/features/tasks/repositories/task.repository";
-import { IDeleteTaskRequestDTO } from "@app/features/tasks/useCases/delete/delete-task.dto";
-import { CacheRepository } from "@app/shared/database/repositories";
-import { HttpResponse, IHttpResponse } from "@app/shared/helpers";
+import { CacheRepository } from "../../../../shared/database/repositories";
+import { HttpResponse, IHttpResponse } from "../../../../shared/helpers";
+import { TaskRepository } from "../../repositories/task.repository";
+import { IDeleteTaskRequestDTO } from "./delete-task.dto";
 
 class DeleteTaskUseCase {
   constructor(
