@@ -1,11 +1,11 @@
 import { DataSource } from "typeorm";
-import { ormConfig } from "../config";
+import { dataSource } from "../config";
 
 class TypeORMProvider {
    static client: DataSource;
 
    static async connect(): Promise<void> {
-      this.client = new DataSource(ormConfig);
+      this.client = dataSource;
       await this.client.initialize();
       console.log("Database connected.");
    }

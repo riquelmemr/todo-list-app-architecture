@@ -1,7 +1,7 @@
 import config from "./jest.config";
 
 config.testMatch = [
-  '<rootDir>/test/**/*.spec.ts'
+  '<rootDir>/test/**/*.e2e.ts'
 ]
 
 export default config;

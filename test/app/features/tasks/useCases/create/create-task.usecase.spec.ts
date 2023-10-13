@@ -20,7 +20,7 @@ function makeSut() {
   }
 }
 
-describe("create-task-usecase", () => {
+describe("create-task-usecase-unit", () => {
   jest.mock(
     "@app/features/tasks/repositories/task.repository"
   );

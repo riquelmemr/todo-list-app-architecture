@@ -9,11 +9,14 @@
     "start": "node dist/src/main/server.js",
     "build": "tsc",
     "migration:create": "yarn typeorm migration:create ./src/database/migrations/CreateTableMigrationName",
-    "migration:run": "yarn typeorm-ts-node-commonjs migration:run -d ./src/database/typeorm.ts",
-    "test": "jest --silent --noStackTrace --runInBand",
+    "migration:run": "yarn typeorm-ts-node-commonjs migration:run -d ./src/main/config/orm.config.ts",
+    "test": "cross-env NODE_ENV=TEST jest --silent --noStackTrace --runInBand",
     "test:verbose": "jest --verbose --runInBand --detectOpenHandles",
     "test:coverage": "jest --runInBand --coverage",
-    "test:watch": "jest --silent --noStackTrace --runInBand --watchAll"
+    "test:watch": "jest --silent --noStackTrace --runInBand --watchAll",
+    "test:integration": "yarn test -c ./jest.config.integ.ts",
+    "test:e2e": "yarn test -c ./jest.config.e2e.ts",
+    "test:setup": "cross-env NODE_ENV=TEST yarn migration:run"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
@@ -34,6 +37,7 @@
   "dependencies": {
     "bcrypt": "^5.1.1",
     "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "ioredis": "^5.3.2",

@@ -1,12 +1,14 @@
-import { DataSourceOptions } from "typeorm";
+import { DataSource } from "typeorm";
 import ENV from "../../app/envs/env";
 
 const env = ENV.Application.NODE_ENV;
-const basePath = env === "DEVELOPMENT" ? "src" : "dist";
+const basePath = env === "PRODUCTION" ? "dist" : "src";
+const dbUrl =
+  env === "TEST" ? ENV.Database.DATABASE_URL_TEST : ENV.Database.DATABASE_URL;
 
-const ormConfig: DataSourceOptions = {
+const dataSource = new DataSource({
   type: "postgres",
-  url: ENV.Database.DATABASE_URL,
+  url: dbUrl,
   synchronize: false,
   logging: false,
   ssl: {
@@ -14,7 +16,7 @@ const ormConfig: DataSourceOptions = {
   },
   migrations: [`${basePath}/app/shared/database/migrations/**/*`],
   entities: [`${basePath}/app/shared/database/entities/**/*`],
-};
+});
 
-export { ormConfig };
+export { dataSource };
 
