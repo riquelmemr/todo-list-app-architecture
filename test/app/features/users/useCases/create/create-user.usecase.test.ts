@@ -23,7 +23,22 @@ describe("create-user-usecase-integration", () => {
     await TypeORMProvider.client.query("TRUNCATE tasks, users;");
   });
 
-  it("should return http code 201 created user", async () => {
+  it("should return http code 400 when user (email) already exists", async () => {
+    const createUserUseCase = makeSut();
+
+    await UserBuilder.init().build();
+    
+    const response = await createUserUseCase.execute({
+      name: "any_name",
+      email: "any_email",
+      password: "any_password",
+    });
+
+    expect(response.statusCode).toBe(400);
+    expect(response.body.error).toBe("Já existe um usuário com esse email! Tente outro.");
+  });
+
+  it("should return http code 201 when create user", async () => {
     const createUserUseCase = makeSut();
 
     const response = await createUserUseCase.execute(getData());
@@ -34,19 +49,5 @@ describe("create-user-usecase-integration", () => {
     expect(response.body.body).toHaveProperty("id");
     expect(response.body.body).toHaveProperty("name", "any_name");
     expect(response.body.body).toHaveProperty("email", "any_email");
-  });
-
-  it("should return http code 400 when user already exists", async () => {
-    const createUserUseCase = makeSut();
-
-    const user = await UserBuilder.init().build();
-    const response = await createUserUseCase.execute({
-      name: user.Name,
-      email: user.Email,
-      password: user.Password,
-    });
-
-    expect(response.statusCode).toBe(400);
-    expect(response.body.error).toBe("Já existe um usuário com esse email! Tente outro.");
   });
 });
