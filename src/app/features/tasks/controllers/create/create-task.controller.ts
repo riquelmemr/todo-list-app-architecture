@@ -7,10 +7,12 @@ class CreateTaskController {
 
   async execute(req: Request, res: Response) {
     const { id: userId } = req.user;
-    const data: ICreateTaskRequestDTO = req.body;
+    const { title, description, finishedDate }: ICreateTaskRequestDTO = req.body;
 
     const { statusCode, body } = await this.createTaskUseCase.execute({
-      ...data,
+      title,
+      description,
+      finishedDate,
       userId,
     });
 

@@ -3,6 +3,13 @@ import { LoginUserUseCase } from "@app/features/users/useCases";
 import { TypeORMProvider } from "@main/database";
 import { UserBuilder } from "@test/app/shared/builders/entities/user.entity.builder";
 
+function getData() {
+  return {
+    email: "any_email",
+    password: "any_password",
+  }
+}
+
 function makeSut() {
   const userRepository = new UserRepository();
   const loginUserUseCase = new LoginUserUseCase(userRepository);
@@ -18,10 +25,7 @@ describe("login-user-usecase-integration", () => {
   it("should return http 400 when user not found", async () => {
     const loginUserUsecase = makeSut();
 
-    const response = await loginUserUsecase.execute({
-      email: "any_email",
-      password: "any_password",
-    });
+    const response = await loginUserUsecase.execute(getData());
 
     expect(response.statusCode).toBe(400);
     expect(response.body.error).toBe("Utilize um email válido ou cadastre-se.");
@@ -46,10 +50,7 @@ describe("login-user-usecase-integration", () => {
 
     const user = await UserBuilder.init().build();
 
-    const response = await loginUserUseCase.execute({
-      email: user.Email,
-      password: "any_password",
-    });
+    const response = await loginUserUseCase.execute(getData());
 
     expect(response.statusCode).toBe(200);
     expect(response.body.success).toBe(true);

@@ -13,7 +13,7 @@ function makeSut() {
   }
 }
 
-describe("create-user-usecase", () => {
+describe("create-user-usecase-unit", () => {
   jest.mock("@app/features/users/repositories/user.repository");
 
   it("should return http code 400 when user already exists", async () => {

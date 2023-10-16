@@ -28,11 +28,7 @@ describe("create-user-usecase-integration", () => {
 
     await UserBuilder.init().build();
     
-    const response = await createUserUseCase.execute({
-      name: "any_name",
-      email: "any_email",
-      password: "any_password",
-    });
+    const response = await createUserUseCase.execute(getData());
 
     expect(response.statusCode).toBe(400);
     expect(response.body.error).toBe("Já existe um usuário com esse email! Tente outro.");

@@ -13,7 +13,7 @@ function makeSut() {
   }
 }
 
-describe('login-user-usecase', () => {
+describe('login-user-usecase-unit', () => {
   jest.mock('@app/features/users/repositories/user.repository');
 
   it('should return http code 400 when user not found searching by email', async () => {
