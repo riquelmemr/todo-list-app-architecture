@@ -3,7 +3,6 @@ import User from "@app/models/user.model";
 import { BcryptProvider } from "@app/shared/helpers";
 
 class UserBuilder {
-  private id: string = "any_id";
   private name: string = "any_name";
   private email: string = "any_email";
   private password: string = "any_password";
