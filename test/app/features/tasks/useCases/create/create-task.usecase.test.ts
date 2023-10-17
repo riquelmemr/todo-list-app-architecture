@@ -30,7 +30,6 @@ describe("create-task-usecase-integration", () => {
       title: "any_title",
       description: "any_description",
       userId: user.Id,
-      finishedDate: undefined,
     });
 
     expect(response.statusCode).toBe(201);
