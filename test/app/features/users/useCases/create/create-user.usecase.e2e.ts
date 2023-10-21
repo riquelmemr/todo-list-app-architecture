@@ -1,16 +1,9 @@
-import { createServerApplication } from "@main/config";
 import { TypeORMProvider } from "@main/database";
+import { UserBuilder } from "@test/app/shared/builders/entities/user.entity.builder";
+import { app } from '@test/setup/app';
 import supertest from "supertest";
 
 describe("create-user-usecase-e2e", () => {
-  let app: Express.Application;
-
-  beforeAll(async () => {
-    app = createServerApplication({
-      listenBefore: true,
-    });
-  });
-
   afterEach(async () => {
     await TypeORMProvider.client.query("TRUNCATE tasks, users;");
   });
@@ -34,11 +27,7 @@ describe("create-user-usecase-e2e", () => {
   });
 
   it("should return http status 400 when user already exists", async () => {
-    await supertest(app).post("/user/create").send({
-      name: "any_name",
-      email: "any_email@example.com",
-      password: "any_password",
-    });
+    await UserBuilder.init().build("any_email@example.com");
 
     const response = await supertest(app).post("/user/create").send({
       name: "any_name",

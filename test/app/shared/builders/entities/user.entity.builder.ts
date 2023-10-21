@@ -14,14 +14,14 @@ class UserBuilder {
     return build;
   }
 
-  async build(): Promise<User> {
+  async build(email?: string): Promise<User> {
     const encryptedPassword = BcryptProvider.encryptPassword(
       this.password
     );
 
     const user = this.userRepository.createEntityInstance({
       name: this.name,
-      email: this.email,
+      email: email ?? this.email,
       password: encryptedPassword,
     });
 
