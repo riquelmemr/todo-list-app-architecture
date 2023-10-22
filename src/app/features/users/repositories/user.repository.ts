@@ -4,7 +4,6 @@ import User from "../../../models/user.model";
 import { UserEntity } from "../../../shared/database/entities/user.entity";
 
 class UserRepository {
-
   private getRepository(): Repository<UserEntity> {
     return TypeORMProvider.client.getRepository(UserEntity);
   }
@@ -14,15 +13,6 @@ class UserRepository {
     const result = await repository.save(user);
 
     return this.mapToModel(result);
-  }
-
-  async getById(id: string): Promise<User | null> {
-    const repository = this.getRepository();
-    const item = await repository.findOne({
-      where: { ["id"]: id },
-    });
-
-    return item ? this.mapToModel(item) : null;
   }
 
   async getByOne(key: string, value: string): Promise<User | null> {
@@ -35,7 +25,10 @@ class UserRepository {
   }
 
   public createEntityInstance(item: DeepPartial<UserEntity>): UserEntity {
-    return TypeORMProvider.client.manager.create(UserEntity, item) as UserEntity;
+    return TypeORMProvider.client.manager.create(
+      UserEntity,
+      item
+    ) as UserEntity;
   }
 
   private mapToModel(item: UserEntity): User {
@@ -51,4 +44,3 @@ class UserRepository {
 
 export { UserRepository };
 export const userRepository = new UserRepository();
-

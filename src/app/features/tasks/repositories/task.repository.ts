@@ -25,15 +25,6 @@ class TaskRepository {
     return item ? this.mapToModel(item) : null;
   }
 
-  async getByOne(key: string, value: string): Promise<Task | null> {
-    const repository = this.getRepository();
-    const item = await repository.findOne({
-      where: { [key]: value } as FindOptionsWhere<TaskEntity>,
-    });
-
-    return item ? this.mapToModel(item) : null;
-  }
-
   async update(
     id: string,
     item: DeepPartial<TaskEntity>

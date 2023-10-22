@@ -13,15 +13,6 @@ class HttpResponse {
     };
   }
 
-  static serverError(error: Error): IHttpResponse {
-    return {
-      statusCode: 500,
-      body: {
-        error: error.message,
-      },
-    };
-  }
-
   static created(body: any): IHttpResponse {
     return {
       statusCode: 201,

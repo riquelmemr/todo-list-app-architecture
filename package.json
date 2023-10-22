@@ -10,7 +10,7 @@
     "build": "tsc",
     "migration:create": "yarn typeorm migration:create ./src/database/migrations/CreateTableMigrationName",
     "migration:run": "yarn typeorm-ts-node-commonjs migration:run -d ./src/main/config/orm.config.ts",
-    "test": "cross-env NODE_ENV=TEST jest --noStackTrace --runInBand",
+    "test": "cross-env NODE_ENV=TEST jest --noStackTrace --silent --runInBand",
     "test:verbose": "jest --verbose --runInBand --detectOpenHandles",
     "test:coverage": "jest --runInBand --coverage",
     "test:watch": "jest --silent --noStackTrace --runInBand --watchAll",

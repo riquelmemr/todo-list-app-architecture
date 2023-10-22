@@ -1,6 +1,12 @@
 import { TaskRepository } from "@app/features/tasks/repositories/task.repository";
 import Task from "@app/models/task.model";
 
+interface TaskOptions {
+  title?: string;
+  description?: string;
+  done?: boolean;
+  archived?: boolean;
+}
 class TaskBuilder {
   private title: string = "any_title";
   private description: string = "any_description";
@@ -12,10 +18,14 @@ class TaskBuilder {
     return build;
   }
 
-  async build(userId: string): Promise<Task> {
+  async build(userId: string, options?: TaskOptions): Promise<Task> {
+    const { title, description, done, archived } = options || {};
+
     const task = this.taskRepository.createEntityInstance({
-      title: this.title,
-      description: this.description,
+      title: title || this.title,
+      description: description || this.description,
+      done: done !== undefined ? done : false,
+      archived: archived !== undefined ? archived : false,
       userId
     });
 
