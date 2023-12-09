@@ -8,8 +8,8 @@
     "dev": "ts-node-dev --transpile-only --watch node_modules src/main/server.ts",
     "start": "node dist/main/server.js",
     "build": "tsc",
-    "migration:create": "yarn typeorm migration:create ./src/database/migrations/CreateTableMigrationName",
-    "migration:run": "yarn typeorm-ts-node-commonjs migration:run -d ./src/database/typeorm.ts"
+    "migration:create": "yarn typeorm migration:create ./src/app/shared/database/migrations/CreateTableMigrationName",
+    "migration:run": "yarn typeorm-ts-node-commonjs migration:run -d ./src/main/config/orm.config.ts"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
